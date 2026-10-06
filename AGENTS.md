@@ -13,7 +13,8 @@ Fork de https://github.com/caelum/caelum-stella. Este repo contém:
   - rebase em `upstream/master` antes de abrir/atualizar;
   - nunca incluir bump de dependência, renomeação, limpeza de plugin, formatação geral ou docs.
 - Melhorias/infra/docs → somente na branch `modernization` do fork.
-- PRs de terceiros no upstream **não são escopo**: não revisar, não comentar, não aprovar.
+- PRs de terceiros no upstream **não são escopo**. Qualquer ação em issues ou PRs de terceiros
+  (comentar, revisar, reagir) exige **confirmação prévia** do usuário.
 - `master` é espelho do upstream (fast-forward apenas):
   `git fetch upstream && git push origin upstream/master:master`.
 
