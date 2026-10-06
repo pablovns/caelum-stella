@@ -32,18 +32,11 @@ Próxima frente: Fase 4 (modernização do fork) enquanto os PRs não são revis
   - #313 — completo na 2.2.2 (PRs #305/#315); Java 8 depende do #319.
   - #316 — comentado com o link do PR #319.
   - #287 — validação de PIS já é coberta pelo `NITValidator` — comentado.
-- **Review dos PRs de terceiros**:
-  - #318 (IE Goiás): testado — 12 testes verdes, aderente ao SINTEGRA atual — comentado.
-  - #317 (template boleto-sem-sacador-avalista): reproduzi #308
-    (`105613749501-4-4` no master → `105613749501-4` no PR); jrxml compila com JasperReports 6.1.0;
-    115 testes verdes — comentado.
 
 ## Fila (próximas tarefas)
 
-1. **#293** campo Instrução cortado — tratado no PR #317 (aguardando merge).
-2. **#286** IE Goiás — coberto pelo PR #318 (aguardando merge).
-3. **#287** PIS — respondido que o `NITValidator` cobre (aguardando retorno).
-4. **Fase 4 (fork, próxima frente ativa)**: JUnit 4.13.2; remover jmock/`mockito-all` (destrava
+1. **#287** PIS — respondido que o `NITValidator` cobre (aguardando retorno).
+2. **Fase 4 (fork, próxima frente ativa)**: JUnit 4.13.2; remover jmock/`mockito-all` (destrava
    JDK 21); plugins mortos (cobertura, eclipse, assembly 2.2-beta-2); JAXB do pom pai para os
    módulos certos; JasperReports 6.21; JSF 2.3; ADR dos módulos órfãos
    (`stella-nfe`, `stella-feriado`, `stella-gateway-formas-pagamento`; remover `stella-taglib/js/flex`).
@@ -55,11 +48,9 @@ Próxima frente: Fase 4 (modernização do fork) enquanto os PRs não são revis
 - `fix/288-campo-livre-msg` → PR #321.
 - `fix/184-codigo-barras-publico` → PR #322.
 - `fix/312-exemplos-deprecated` → PR #323.
-- `review/pr-318`, `review/pr-317` → branches locais de teste (não publicar).
 - `modernization` → AGENTS.md + este PROGRESS.md (docs internos).
 
 ## Links
 
 - Upstream: https://github.com/caelum/caelum-stella
 - PRs: #319 · #320 · #321 · #322 · #323
-- Em review: #318 · #317
