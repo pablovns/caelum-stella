@@ -4,7 +4,8 @@ Atualizado: 2026-10-06
 
 ## Fase atual
 
-Fase 1 (Java 8) + triagem + fixes iniciais — 4 PRs aguardando review no upstream.
+Fase 1 (Java 8) + triagem + fixes iniciais — 5 PRs aguardando review no upstream.
+Próxima frente: Fase 4 (modernização do fork) enquanto os PRs não são revisados.
 
 ## PRs abertos no upstream
 
@@ -15,6 +16,8 @@ Fase 1 (Java 8) + triagem + fixes iniciais — 4 PRs aguardando review no upstre
   o tamanho real. Relacionado a #288.
 - **#322** (`fix/184-codigo-barras-publico`) — `CodigoDeBarrasBuilder` e construtor públicos.
   Relacionado a #184.
+- **#323** (`fix/312-exemplos-deprecated`) — exemplos migrados para `Beneficiario`/`Pagador`;
+  parent do example corrigido e módulo reativado no reactor. Relacionado a #312.
 
 ## Concluído
 
@@ -39,11 +42,11 @@ Fase 1 (Java 8) + triagem + fixes iniciais — 4 PRs aguardando review no upstre
 
 1. **#293** campo Instrução cortado — tratado no PR #317 (aguardando merge).
 2. **#286** IE Goiás — coberto pelo PR #318 (aguardando merge).
-3. **#312** exemplos com APIs deprecated (`examples/boleto-example` fora do reactor e com
-   parent `2.0.5-SNAPSHOT` — atualizar exemplo e pom; avaliar reativar no CI).
-4. **#287** PIS — respondido que o `NITValidator` cobre (aguardando retorno).
-5. **Fase 4 (fork)**: JUnit 4.13.2; remover jmock/`mockito-all` (destrava JDK 21); plugins mortos;
-   JAXB do pom pai para os módulos certos; JasperReports 6.21; JSF 2.3; ADR dos módulos órfãos.
+3. **#287** PIS — respondido que o `NITValidator` cobre (aguardando retorno).
+4. **Fase 4 (fork, próxima frente ativa)**: JUnit 4.13.2; remover jmock/`mockito-all` (destrava
+   JDK 21); plugins mortos (cobertura, eclipse, assembly 2.2-beta-2); JAXB do pom pai para os
+   módulos certos; JasperReports 6.21; JSF 2.3; ADR dos módulos órfãos
+   (`stella-nfe`, `stella-feriado`, `stella-gateway-formas-pagamento`; remover `stella-taglib/js/flex`).
 
 ## Branches
 
@@ -51,11 +54,12 @@ Fase 1 (Java 8) + triagem + fixes iniciais — 4 PRs aguardando review no upstre
 - `fix/221-bradesco-dv` → PR #320.
 - `fix/288-campo-livre-msg` → PR #321.
 - `fix/184-codigo-barras-publico` → PR #322.
+- `fix/312-exemplos-deprecated` → PR #323.
 - `review/pr-318`, `review/pr-317` → branches locais de teste (não publicar).
 - `modernization` → AGENTS.md + este PROGRESS.md (docs internos).
 
 ## Links
 
 - Upstream: https://github.com/caelum/caelum-stella
-- PRs: #319 · #320 · #321 · #322
+- PRs: #319 · #320 · #321 · #322 · #323
 - Em review: #318 · #317
