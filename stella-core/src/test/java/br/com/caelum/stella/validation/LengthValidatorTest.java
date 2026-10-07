@@ -1,9 +1,12 @@
 package br.com.caelum.stella.validation;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.List;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -40,20 +43,17 @@ public class LengthValidatorTest {
 
     @Test
     public void shouldReturnCorrectValidationMessage() {
-        Mockery mockery = new Mockery();
-        final MessageProducer messageProducer = mockery.mock(MessageProducer.class);
+        MessageProducer messageProducer = mock(MessageProducer.class);
         LengthValidator lengthValidator = new LengthValidator(messageProducer, 2);
         String message = "O tamanho da entrada é inválido.";
-        final ValidationMessage validationMessage = new SimpleValidationMessage(message);
-        mockery.checking(new Expectations() {
-            {
-                one(messageProducer).getMessage(with(equal(new LengthError(2))));
-                will(returnValue(validationMessage));
-            }
-        });
+        ValidationMessage validationMessage = new SimpleValidationMessage(message);
+        when(messageProducer.getMessage(new LengthError(2))).thenReturn(validationMessage);
+
         List<ValidationMessage> invalidMessages = lengthValidator.invalidMessagesFor(12345);
-        Assert.assertEquals(1, invalidMessages.size());
-        Assert.assertEquals(message, invalidMessages.get(0).getMessage());
+        assertEquals(1, invalidMessages.size());
+        assertEquals(message, invalidMessages.get(0).getMessage());
+
+        verify(messageProducer).getMessage(new LengthError(2));
     }
 
     @Test

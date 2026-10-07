@@ -2,13 +2,14 @@ package br.com.caelum.stella.validation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
 import org.junit.Test;
 
 import br.com.caelum.stella.MessageProducer;
@@ -18,17 +19,11 @@ public class BaseValidatorTest {
 
     @Test
     public void testGetValidationMessagesT() {
-        Mockery mockery = new Mockery();
-        final MessageProducer messageProducer = mockery.mock(MessageProducer.class);
-        final InvalidValue invalidValue = mockery.mock(InvalidValue.class);
-        final ValidationMessage validationMessage = mockery.mock(ValidationMessage.class);
+        MessageProducer messageProducer = mock(MessageProducer.class);
+        InvalidValue invalidValue = mock(InvalidValue.class);
+        ValidationMessage validationMessage = mock(ValidationMessage.class);
+        when(messageProducer.getMessage(invalidValue)).thenReturn(validationMessage);
 
-        mockery.checking(new Expectations() {
-            {
-                exactly(1).of(messageProducer).getMessage(invalidValue);
-                will(returnValue(validationMessage));
-            }
-        });
         BaseValidator validator = new BaseValidator(messageProducer);
 
         List<InvalidValue> invalidValues = Arrays.asList(invalidValue);
@@ -37,22 +32,16 @@ public class BaseValidatorTest {
         expected.add(validationMessage);
         assertEquals(expected, actual);
 
-        mockery.assertIsSatisfied();
+        verify(messageProducer).getMessage(invalidValue);
     }
 
     @Test
     public void testAssertValidShouldThrowInvalidStateExpectionWhenComesAnInvalidValue() {
-        Mockery mockery = new Mockery();
-        final MessageProducer messageProducer = mockery.mock(MessageProducer.class);
-        final InvalidValue invalidValue = mockery.mock(InvalidValue.class);
-        final ValidationMessage validationMessage = mockery.mock(ValidationMessage.class);
+        MessageProducer messageProducer = mock(MessageProducer.class);
+        InvalidValue invalidValue = mock(InvalidValue.class);
+        ValidationMessage validationMessage = mock(ValidationMessage.class);
+        when(messageProducer.getMessage(invalidValue)).thenReturn(validationMessage);
 
-        mockery.checking(new Expectations() {
-            {
-                exactly(1).of(messageProducer).getMessage(invalidValue);
-                will(returnValue(validationMessage));
-            }
-        });
         BaseValidator validator = new BaseValidator(messageProducer);
         try {
             List<InvalidValue> invalidValues = Arrays.asList(invalidValue);
@@ -67,15 +56,13 @@ public class BaseValidatorTest {
             fail();
         }
 
-        mockery.assertIsSatisfied();
+        verify(messageProducer).getMessage(invalidValue);
     }
 
     @Test
     public void testAssertValidShouldNotThrowInvalidStateExpectionWhenValueIsValid() {
-        Mockery mockery = new Mockery();
-        final MessageProducer messageProducer = mockery.mock(MessageProducer.class);
+        MessageProducer messageProducer = mock(MessageProducer.class);
 
-        mockery.checking(new Expectations());
         BaseValidator validator = new BaseValidator(messageProducer);
         try {
             List<InvalidValue> invalidValues = new ArrayList<InvalidValue>();
@@ -83,8 +70,6 @@ public class BaseValidatorTest {
         } catch (InvalidStateException e) {
             fail();
         }
-
-        mockery.assertIsSatisfied();
     }
 
 }
