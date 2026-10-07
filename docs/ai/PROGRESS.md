@@ -1,54 +1,49 @@
 # PROGRESS — Modernização caelum-stella
 
-Atualizado: 2026-10-06
+Atualizado: 2026-10-07
 
 ## Fase atual
 
-Fase 1 (Java 8) + triagem + fixes iniciais — 5 PRs aguardando review no upstream.
-Próxima frente: Fase 4 (modernização do fork) enquanto os PRs não são revisados.
-
-## PRs abertos no upstream
-
-- **#319** (`fix/316-java8-bytecode`) — compila com `release 8` → bytecode 52. Corrige #316.
-- **#320** (`fix/221-bradesco-dv`) — dígito de auto-conferência do nosso número Bradesco
-  (módulo 11 base 7; resto 1 = "P"). Relacionado a #221.
-- **#321** (`fix/288-campo-livre-msg`) — mensagem de campo livre inválido do BB passa a mostrar
-  o tamanho real. Relacionado a #288.
-- **#322** (`fix/184-codigo-barras-publico`) — `CodigoDeBarrasBuilder` e construtor públicos.
-  Relacionado a #184.
-- **#323** (`fix/312-exemplos-deprecated`) — exemplos migrados para `Beneficiario`/`Pagador`;
-  parent do example corrigido e módulo reativado no reactor. Relacionado a #312.
+Fase 4 (modernização do fork) em andamento — item (a) concluído: suíte completa verde no JDK 21.
 
 ## Concluído
 
-- **Baseline JDK 11**: `mvn -B clean install` verde — 975 testes, 0 falhas.
-- **Baseline JDK 21**: `mvn -B clean test` — 32 classes de teste do `stella-core` falham por
-  Mockito 1.8.5 (`ClassImposterizer` usa reflection em `ClassLoader.defineClass`, bloqueada no
-  JDK 17+). Demais módulos verdes. Vira tarefa da Fase 4.
-- **Triagem upstream** (comentários publicados):
-  - #291 — corrigido desde 2.2.0 (PR #292).
-  - #309 — corrigido desde 2.2.1 (PR #307; pattern aceita 15 e 75–79).
-  - #306 — coberto por testes desde 2.1.5 (commits de 2018, range ABBC pós-2025).
-  - #313 — completo na 2.2.2 (PRs #305/#315); Java 8 depende do #319.
-  - #316 — comentado com o link do PR #319.
-  - #287 — validação de PIS já é coberta pelo `NITValidator` — comentado.
+### Fase 4a — testes modernos (JDK 21 verde)
+
+- `mockito-all 1.8.5` → `mockito-core 5.19.0` (commit `7f3cd730`).
+- `junit 4.11` → `4.13.2`; `hamcrest 2.2`; `jmock`/`jmock-legacy` removidos; 9 testes migrados
+  para Mockito (commit `96ad6d8c`).
+- `stella-hibernate-user-types`: Hibernate `[4.0.1.Final,5.2.0-final)` → `5.6.15.Final`,
+  HSQLDB 2.2.8 → 2.7.4, user types migrados para `SharedSessionContractImplementor`,
+  `flush()` antes do `commit()` nos testes (commit `3e8219a6`).
+- Verificação: `mvn -B clean test` verde no **JDK 11 e no JDK 21** (975 testes) e
+  `mvn -B clean install` verde no JDK 11.
+- Observação: Mockito 5 exige Java 11+ para rodar os testes; o bytecode da lib continua 52.
+
+### PRs upstream (Fase 1–3)
+
+- Abertos: **#319** (#316, release 8), **#320** (#221, DV Bradesco), **#321** (#288, msg BB),
+  **#322** (#184, builder público), **#323** (#312, exemplos + reactor).
+- Triagem comentada: #291, #306, #309, #313, #316, #287.
+- Baseline JDK 11 original: 975 testes verdes.
 
 ## Fila (próximas tarefas)
 
-1. **#287** PIS — respondido que o `NITValidator` cobre (aguardando retorno).
-2. **Fase 4 (fork, próxima frente ativa)**: JUnit 4.13.2; remover jmock/`mockito-all` (destrava
-   JDK 21); plugins mortos (cobertura, eclipse, assembly 2.2-beta-2); JAXB do pom pai para os
-   módulos certos; JasperReports 6.21; JSF 2.3; ADR dos módulos órfãos
-   (`stella-nfe`, `stella-feriado`, `stella-gateway-formas-pagamento`; remover `stella-taglib/js/flex`).
+1. **Fase 4b (próxima)** — higiene de build: remover plugins mortos (cobertura, eclipse 2.8,
+   assembly 2.2-beta-2, source 2.1.2, changelog/jxr, `oss-parent:7`); mover JAXB do pom pai para os
+   módulos que usam; alinhar `maven-compiler-plugin`.
+2. **Fase 4c** — CI do fork: matrix JDK 11/21 + check de bytecode 52.
+3. **Fase 4d** — deps de produção: JasperReports 6.1 → 6.21; JSF 2.0.2 → `javax.faces` 2.3.
+4. **Fase 4e** — ADR dos módulos órfãos (`nfe`, `feriado`, `gateway`) e remoção dos vazios
+   (`taglib`, `js`, `flex`). Nota: `stella-gateway-formas-pagamento` usa jmock e está fora do
+   reactor — se for reativado, migrar (jmock não está mais no pom pai).
+5. **Upstream** — acompanhar review dos PRs #319–#323; após merge do #319, pedir release 2.2.3.
 
 ## Branches
 
-- `fix/316-java8-bytecode` → PR #319.
-- `fix/221-bradesco-dv` → PR #320.
-- `fix/288-campo-livre-msg` → PR #321.
-- `fix/184-codigo-barras-publico` → PR #322.
-- `fix/312-exemplos-deprecated` → PR #323.
-- `modernization` → AGENTS.md + este PROGRESS.md (docs internos).
+- `modernization` → docs + Fase 4 (commits `7f3cd730`, `3e8219a6`, `96ad6d8c`).
+- `fix/316-java8-bytecode`, `fix/221-bradesco-dv`, `fix/288-campo-livre-msg`,
+  `fix/184-codigo-barras-publico`, `fix/312-exemplos-deprecated` → PRs upstream #319–#323.
 
 ## Links
 
