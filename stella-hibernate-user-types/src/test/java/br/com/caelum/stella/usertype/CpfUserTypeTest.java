@@ -34,8 +34,8 @@ public class CpfUserTypeTest {
 		CPF cpf = new CPF("555.555.555-55");
 		pessoa.setCpf(cpf);
 		session.save(pessoa);
-		transaction.commit();
 		session.flush();
+		transaction.commit();
 		session.close();
 		session = factory.openSession();
 		Long id = pessoa.getId();

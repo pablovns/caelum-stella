@@ -18,13 +18,13 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>[4.0.1.Final,5.2.0-final)</version>
+			<version>5.6.15.Final</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<version>2.2.8</version>
+			<version>2.7.4</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

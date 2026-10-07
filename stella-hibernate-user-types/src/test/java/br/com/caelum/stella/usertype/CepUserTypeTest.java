@@ -38,8 +38,8 @@ public class CepUserTypeTest {
         CEP cep = new CEP("12345-678");
         endereco.setCep(cep);
         session.save(endereco);
-        transaction.commit();
         session.flush();
+        transaction.commit();
         session.close();
         session = factory.openSession();
         Long id = endereco.getId();
